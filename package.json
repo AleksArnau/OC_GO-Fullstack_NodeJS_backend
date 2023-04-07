@@ -1,0 +1,14 @@
+{
+  "name": "go-fullstack-crud",
+  "version": "1.0.0",
+  "description": "backend for crud operations on the fullstack app from OC's lessons",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aleks",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
