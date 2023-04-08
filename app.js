@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 //passé dans routes
 // const Thing = require("./models/thing");
 const stuffRoutes = require("./routes/stuff");
+const userRoutes = require("./routes/user");
 
 const app = express();
 //base de donnee, a placer apres la declaration de app
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
 
 //route pour les requetes /api/stuff
 app.use("/api/stuff", stuffRoutes);
+app.use('/api/auth', userRoutes);
 
 //passé dans routes
 // //middleware POST, a placer avant les requetes GET
