@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const Thing = require("./models/thing");
 
 const app = express();
 //base de donnee, a placer apres la declaration de app
@@ -29,10 +30,42 @@ app.use((req, res, next) => {
 
 //middleware POST, a placer avant les requetes GET
 app.post("/api/stuff", (req, res, next) => {
-  console.log(req.body);
-  res.status(201).json({
-    message: "Objet créé !",
+  delete req.body._id;
+  const thing = new Thing({
+    ...req.body,
   });
+  thing
+    .save()
+    .then(() => res.status(201).json({ message: "Objet enregistré !" }))
+    .catch((error) => res.status(400).json({ error }));
+});
+
+//route GET individuel, a placer apres POST
+app.get("/api/stuff/:id", (req, res, next) => {
+  Thing.findOne({ _id: req.params.id })
+    .then((thing) => res.status(200).json(thing))
+    .catch((error) => res.status(404).json({ error }));
+});
+
+//requetes PUT, a placer apres GET individuel
+app.put("/api/stuff/:id", (req, res, next) => {
+  Thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+    .then(() => res.status(200).json({ message: "Objet modifié !" }))
+    .catch((error) => res.status(400).json({ error }));
+});
+
+//route DELETE
+app.delete("/api/stuff/:id", (req, res, next) => {
+  Thing.deleteOne({ _id: req.params.id })
+    .then(() => res.status(200).json({ message: "Objet supprimé !" }))
+    .catch((error) => res.status(400).json({ error }));
+});
+
+//route GET
+app.use("/api/stuff", (req, res, next) => {
+  Thing.find()
+    .then((things) => res.status(200).json(things))
+    .catch((error) => res.status(400).json({ error }));
 });
 
 //middleware
