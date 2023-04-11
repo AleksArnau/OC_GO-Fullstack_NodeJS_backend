@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 
 //route pour les requetes /api/stuff
 app.use("/api/stuff", stuffRoutes);
-app.use('/api/auth', userRoutes);
+app.use("/api/auth", userRoutes);
 
 //passé dans routes
 // //middleware POST, a placer avant les requetes GET
